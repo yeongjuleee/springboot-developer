@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>블로그 글 목록</title>
+  <link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+
+  <div class="p-5 mb-5 text-center</> bg-light">
+    <h1 class="mb-3">My Blog</h1>
+    <h4 class="mb-3">블로그에 오신 것을 환영합니다.</h4>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <article>
+          <input type="hidden" id="article-id" th:value="${article.id}">  <!--블로그 글 id 추가-->
+          <header class="mb-4">
+            <h1 class="fw-bolder mb-1" th:text="${article.title}"></h1>
+            <div class="text-muted fst-italic mb-2" th:text="|Posted on ${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}
+            By ${article.author}|"></div>
+            <!--  템플릿 함수 중 ${#temporals.format()} : 날짜 형식을 yyyy-MM-dd HH:mm으로 포매팅.
+                  포매팅한 날짜 형식을 || 기호와 함께 Posted on 이라는 텍스트와 붙이면, 블로그 결과물에 '2099-99-31 23:11 Posted on' 같이 게시한 시간 알림을 표시할 수 있음
+             -->
+          </header>
+          <section class="mb-5">
+            <p class="fs-5 mb-4" th:text="${article.content}"></p>
+          </section>
+          <button type="button" id="modify-btn" th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|"
+                  class="btn btn-primary btn-sm">수정</button>
+          <button type="button" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button>
+        </article>
+      </div>
+    </div>
+
+  </div>
+
+<!-- article.js 파일 추가 -->
+<script src="/js/token.js"></script> <!-- 토큰 가져오는 js -->
+<script src="/js/article.js"></script>
+</body>
+</html>

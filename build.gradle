@@ -1,0 +1,68 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.0'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'study.blog'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	/* lombok dependency */
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	/* DataBase dependency */
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.7'
+	// AWS RDS 를 하기위한 mysql 관련
+//	implementation group: 'software.aws.rds', name: 'aws-mysql-jdbc', version: '1.1.12'
+//	runtimeOnly 'mysql:mysql-connector-j // 아마존 서버에서 MySQL을 사용하기 위한 의존성
+	implementation 'com.mysql:mysql-connector-j:8.2.0' // 아마존 서버에서 MySQL을 사용하기 위한 의존성
+
+	/* SpringSecurity dependency */
+	// 1. 스프링 시큐리티를 사용하기 위한 스타터 추가
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// 2. 타임리프에서 스프링 시큐리티를 사용하기 위한 의존성 추가
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	/* JWT 토큰 */
+	implementation 'io.jsonwebtoken:jjwt:0.9.1' // 자바 JWT 라이브러리
+	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359' // XML 문서와 Java 객체 간 매핑 자동화
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor" // JWT 어노테이션(종속성) 사용
+
+	/* test */
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // springboot를 테스트 하기 위한 의존성
+	testImplementation 'org.springframework.security:spring-security-test' // 스프링 시큐리티 테스트를 하기 위한 의존성 추가
+
+	//OAuth 2.0 관련 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	// 테스트 코드에서 사용하기 위한 lombok
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.projectlombok:lombok'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

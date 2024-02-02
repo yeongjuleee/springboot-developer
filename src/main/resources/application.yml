@@ -1,0 +1,38 @@
+spring:
+  #    AWS 의 RDS 사용 X 일 때 사용하는 DB
+  #  datasource:
+  #    url: jdbc:mariadb://localhost:3306/bootblog
+  #    driver-class-name: org.mariadb.jdbc.Driver
+  #    username: DB_사용자
+  #    password: DB_사용자_비번
+  datasource:
+    url: jdbc:mysql://AWS_엔드포인트.rds.amazonaws.com:3306/blog
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: AWS에서_설정한_username
+    password: AWS에서_설정한_password
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: google_cloud_id
+            client-secret: google_cloud_password
+            scope:
+              - email
+              - profile
+
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    hibernate:
+      ddl-auto: create
+
+    properties:
+      hibernate:
+        format_sql: true
+        show-sql: true
+
+# JWT(json web token) 토큰 설정
+jwt:
+  issuer: token_발행자
+  secret-key: token_비번
